@@ -359,6 +359,7 @@ do
     end
 
     function settings:Set(name, value)
+        print(settings.saved)
         local r = settings.saved[name]
         settings.saved[name] = value
         return r
