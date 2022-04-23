@@ -86,9 +86,10 @@ function encoder.encode(t, ...)
         end
         c = s .. new
     end
-    return c
+    return tostring(c)
 end
 function encoder.decode(t, extra)
+    t = tonumber(t)
     local p = 0
     local function read(l)
         l = l or 1
