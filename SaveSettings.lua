@@ -1,3 +1,5 @@
+--stolen from https://github.com/Herrtt
+
 local string, math, table, Color3, tonumber, tostring = string, math, table, Color3, tonumber, tostring
 
 
