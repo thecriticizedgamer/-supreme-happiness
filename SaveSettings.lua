@@ -1,5 +1,3 @@
---stolen from https://github.com/Herrtt
-
 local string, math, table, Color3, tonumber, tostring = string, math, table, Color3, tonumber, tostring
 
 
@@ -91,13 +89,12 @@ function encoder.encode(t, ...)
     return tostring(c)
 end
 function encoder.decode(t, extra)
-	
     t = tonumber(t)
-	
     local p = 0
     local function read(l)
         l = l or 1
         p = p + l
+        print(t)
         return t:sub(p-l + 1, p)
     end
     local function get(a)
