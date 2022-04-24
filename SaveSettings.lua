@@ -100,6 +100,7 @@ function encoder.decode(t, extra)
     end
     local function get(a)
         local k = ""
+		print(a)
         while p < #t do
             if t:sub(p+1,p+1) == a then
                 break
