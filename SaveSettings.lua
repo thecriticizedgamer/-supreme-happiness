@@ -94,7 +94,6 @@ function encoder.decode(t, extra)
     local function read(l)
         l = l or 1
         p = p + l
-        print(tt)
         return tt:sub(p-l + 1, p)
     end
     local function get(a)
