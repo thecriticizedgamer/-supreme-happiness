@@ -91,7 +91,9 @@ function encoder.encode(t, ...)
     return tostring(c)
 end
 function encoder.decode(t, extra)
+	print(t)
     t = tonumber(t)
+	print(t)
     local p = 0
     local function read(l)
         l = l or 1
@@ -100,7 +102,6 @@ function encoder.decode(t, extra)
     end
     local function get(a)
         local k = ""
-		print(a)
         while p < #t do
             if t:sub(p+1,p+1) == a then
                 break
