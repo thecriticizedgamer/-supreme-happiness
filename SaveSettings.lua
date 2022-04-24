@@ -91,9 +91,9 @@ function encoder.encode(t, ...)
     return tostring(c)
 end
 function encoder.decode(t, extra)
-	print(t)
+	
     t = tonumber(t)
-	print(t)
+	
     local p = 0
     local function read(l)
         l = l or 1
