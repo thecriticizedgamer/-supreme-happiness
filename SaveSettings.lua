@@ -89,17 +89,18 @@ function encoder.encode(t, ...)
     return tostring(c)
 end
 function encoder.decode(t, extra)
+    local tt = t
     local p = 0
     local function read(l)
         l = l or 1
         p = p + l
-        print(t)
-        return t:sub(p-l + 1, p)
+        print(tt)
+        return tt:sub(p-l + 1, p)
     end
     local function get(a)
         local k = ""
-        while p < #t do
-            if t:sub(p+1,p+1) == a then
+        while p < #tt do
+            if tt:sub(p+1,p+1) == a then
                 break
             else
                 k = k .. read()
@@ -109,7 +110,7 @@ function encoder.decode(t, extra)
     end
     local type = rtypes[read()]
     local c
-
+    
     if type == "nil" then
         read()
     elseif type == "boolean" then
