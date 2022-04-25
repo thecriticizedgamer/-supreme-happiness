@@ -1394,7 +1394,10 @@ function finity.new(isdark, gprojectName, thinProject)
 
 										if callback then
 											local s, e = pcall(function()
-												callback(keyc)
+												local String = callback(keyc)
+												if String then
+													cheat.button.Text = tostring(String)
+												end
 											end)
 			
 											if not s then warn("error: ".. e) end
@@ -1405,6 +1408,7 @@ function finity.new(isdark, gprojectName, thinProject)
 									cheat.button.Text = "Click to Bind"
 									cheat.value = nil
 									cheat.holding = false
+									--[[
 									delay(0, function()
 										if callback then
 											local s, e = pcall(function()
@@ -1414,7 +1418,7 @@ function finity.new(isdark, gprojectName, thinProject)
 											if not s then warn("error: ".. e) end
 										end
 									end)
-
+									]]
 									connection:Disconnect()
 									connection = nil
 								elseif keyc == finityData.ToggleKey then
@@ -1430,7 +1434,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							callback_bind = nil
 							cheat.button.Text = "Click to Bind"
 							cheat.holding = false
-
+							--[[
 							delay(0, function()
 								if callback then
 									local s, e = pcall(function()
@@ -1439,7 +1443,7 @@ function finity.new(isdark, gprojectName, thinProject)
 	
 									if not s then warn("error: ".. e) end
 								end
-							end)
+							end)]]
 							
                             if connection then
                                 connection:Disconnect()
