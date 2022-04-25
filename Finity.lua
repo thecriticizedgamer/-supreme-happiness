@@ -1379,9 +1379,9 @@ function finity.new(isdark, gprojectName, thinProject)
 							cheat.holding = false
 
 							connection = finity.gs["UserInputService"].InputBegan:Connect(function(Input)
-								local keyc = key.KeyCode == Enum.KeyCode.Unknown and key.UserInputType or key.KeyCode
-								if Input.UserInputType.Name == "Keyboard" and Input.KeyCode ~= finityData.ToggleKey and Input.KeyCode ~= Enum.KeyCode.Backspace then
-									cheat.button.Text = "Bound to " .. tostring(Input.KeyCode.Name)
+								local keyc = Input.KeyCode == Enum.KeyCode.Unknown and Input.UserInputType or Input.KeyCode
+								if keyc.UserInputType.Name ~= "MouseMovement" and keyc ~= finityData.ToggleKey and keyc ~= Enum.KeyCode.Backspace then
+									cheat.button.Text = "Bound to " .. tostring(keyc.Name)
 									
                                     if connection then
                                         connection:Disconnect()
@@ -1389,18 +1389,18 @@ function finity.new(isdark, gprojectName, thinProject)
                                     end
 									
 									delay(0, function()
-										callback_bind = Input.KeyCode
-										cheat.value = Input.KeyCode
+										callback_bind = keyc
+										cheat.value = keyc
 
 										if callback then
 											local s, e = pcall(function()
-												callback(Input.KeyCode)
+												callback(keyc)
 											end)
 			
 											if not s then warn("error: ".. e) end
 										end
 									end)
-								elseif Input.KeyCode == Enum.KeyCode.Backspace then
+								elseif keyc == Enum.KeyCode.Backspace then
 									callback_bind = nil
 									cheat.button.Text = "Click to Bind"
 									cheat.value = nil
@@ -1417,7 +1417,7 @@ function finity.new(isdark, gprojectName, thinProject)
 
 									connection:Disconnect()
 									connection = nil
-								elseif Input.KeyCode == finityData.ToggleKey then
+								elseif keyc == finityData.ToggleKey then
 									cheat.button.Text = "Invalid Key";
 									cheat.value = nil
 								end
@@ -1451,10 +1451,10 @@ function finity.new(isdark, gprojectName, thinProject)
                             cheat.value = tostring(value)
                             cheat.button.Text = "Bound to " .. tostring(value)
                         end
-						
+						--[[
 						finity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
 							if callback_bind and Input.KeyCode == callback_bind and not Process then
-								print("a")
+
 								cheat.holding = true
 								if callback then
 									local s, e = pcall(function()
@@ -1465,6 +1465,7 @@ function finity.new(isdark, gprojectName, thinProject)
 								end
 							end
 						end)
+						]]
 						finity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
 							if callback_bind and Input.KeyCode == callback_bind and not Process then
 								cheat.holding = true
