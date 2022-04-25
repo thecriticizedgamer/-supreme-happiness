@@ -1401,8 +1401,8 @@ function finity.new(isdark, gprojectName, thinProject)
 											end)
 											if not s then warn("error: ".. e) end
 										end
+										cheat.button.Text = buttontext
 									end)
-									cheat.button.Text = buttontext
 								elseif keyc == Enum.KeyCode.Backspace then
 									callback_bind = nil
 									cheat.button.Text = "Click to Bind"
