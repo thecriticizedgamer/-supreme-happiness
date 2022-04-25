@@ -1380,7 +1380,7 @@ function finity.new(isdark, gprojectName, thinProject)
 
 							connection = finity.gs["UserInputService"].InputBegan:Connect(function(Input)
 								local keyc = Input.KeyCode == Enum.KeyCode.Unknown and Input.UserInputType or Input.KeyCode
-								if keyc.UserInputType.Name ~= "MouseMovement" and keyc ~= finityData.ToggleKey and keyc ~= Enum.KeyCode.Backspace then
+								if keyc.Name ~= "MouseMovement" and keyc ~= finityData.ToggleKey and keyc ~= Enum.KeyCode.Backspace then
 									cheat.button.Text = "Bound to " .. tostring(keyc.Name)
 									
                                     if connection then
