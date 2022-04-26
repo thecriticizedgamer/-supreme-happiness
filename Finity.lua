@@ -1327,7 +1327,7 @@ function finity.new(isdark, gprojectName, thinProject)
                         local callback_bind = data and data.bind
 						local connection
 						cheat.holding = false
-						
+						print(s)
 						cheat.background = finity:Create("ImageLabel", {
 							Name = "Background",
 							BackgroundColor3 = Color3.new(1, 1, 1),
