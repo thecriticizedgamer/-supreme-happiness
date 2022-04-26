@@ -1343,18 +1343,17 @@ function finity.new(isdark, gprojectName, thinProject)
 					
 					elseif string.lower(kind) == "keybind" or string.lower(kind) == "bind" then
 						local callback_bind = data and data.bind
-						if callback_bind and typeof(callback_bind) ~= "EnumItem" then
+						local s, r = pcall(function()
 							local s, r = pcall(function()
-								local s, r = pcall(function()
-									local key = Enum.KeyCode[callback_bind]
-									callback_bind = key
-									key = nil
-								end)
-								local key = Enum.UserInputType[callback_bind]
+								local key = Enum.KeyCode[callback_bind]
 								callback_bind = key
 								key = nil
 							end)
-						end
+							local key = Enum.UserInputType[callback_bind]
+							callback_bind = key
+							key = nil
+						end)
+						s,r = nil,nil
 						local connection
 						cheat.holding = false
 						
