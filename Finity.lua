@@ -670,6 +670,24 @@ function finity.new(isdark, gprojectName, thinProject)
 							end
 						end)
 
+						function cheat:SetValue(value)
+                            cheat.value = value
+							if cheat.value then
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+							else
+								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
+							end
+                            if callback then
+                                local s, e = pcall(function()
+                                    callback(cheat.value)
+                                end)
+                                if not s then 
+                                    warn("error: "..e) 
+                                end
+                            end
+                        end
+
 						cheat.checkboxbutton.Parent = cheat.outerbox
                         cheat.outerbox.Parent = cheat.container
                     elseif string.lower(kind) == "color" or string.lower(kind) == "colorpicker" then
@@ -1324,10 +1342,22 @@ function finity.new(isdark, gprojectName, thinProject)
 						cheat.button.Parent = cheat.container
 					
 					elseif string.lower(kind) == "keybind" or string.lower(kind) == "bind" then
-                        local callback_bind = data and data.bind
+						local callback_bind = data and data.bind
+						if callback_bind and typeof(callback_bind) ~= "EnumItem" then
+							local s, r = pcall(function()
+								local s, r = pcall(function()
+									local key = Enum.KeyCode[callback_bind]
+									callback_bind = key
+									key = nil
+								end)
+								local key = Enum.UserInputType[callback_bind]
+								callback_bind = key
+								key = nil
+							end)
+						end
 						local connection
 						cheat.holding = false
-						print(s)
+						
 						cheat.background = finity:Create("ImageLabel", {
 							Name = "Background",
 							BackgroundColor3 = Color3.new(1, 1, 1),
