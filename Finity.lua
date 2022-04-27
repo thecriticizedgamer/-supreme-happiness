@@ -1,27 +1,24 @@
 --[[
-	 ______ _____ _   _ _____ _________     __
-	|  ____|_   _| \ | |_   _|__   __\ \   / /
-	| |__    | | |  \| | | |    | |   \ \_/ / 
-	|  __|   | | | . ` | | |    | |    \   /  
-	| |     _| |_| |\  |_| |_   | |     | |   
-	|_|    |_____|_| \_|_____|  |_|     |_|   
+	   ____________ _____ _   _ _____ _________     __
+      |____    ____|_   _| \ | |_   _|__   __\ \   / /
+	        | |      | | |  \| | | |    | |   \ \_/ / 
+	        | |      | | | . ` | | |    | |    \   /  
+	        | |     _| |_| |\  |_| |_   | |     | |   
+	        |_|    |_____|_| \_|_____|  |_|     |_|   
 	
 	Source:
-		https://d3to-finity.000webhostapp.com/files/source-0.1.2.txt
-	Version:
-	 0.1.5
-	Date: 
-		April 21th, 2020
+		
 	Author: 
-		detourious @ v3rmillion.netf
+		The guy who i stole this from: https://v3rmillion.net/member.php?action=profile&uid=56196
+		The guy who modified it: 
 					
 --]]
 
 
-local finity = {}
-finity.gs = {}
+local Tinity = {}
+Tinity.gs = {}
 
-finity.theme = { -- light
+Tinity.theme = { -- light
 	main_container = Color3.fromRGB(249, 249, 255),
 	separator_color = Color3.fromRGB(223, 219, 228),
 
@@ -57,7 +54,7 @@ finity.theme = { -- light
 	scrollbar_color = Color3.fromRGB(198, 189, 202),
 }
 
-finity.dark_theme = { -- dark
+Tinity.dark_theme = { -- dark
 	main_container = Color3.fromRGB(32, 32, 33),
 	separator_color = Color3.fromRGB(63, 63, 65),
 
@@ -93,7 +90,7 @@ finity.dark_theme = { -- dark
 	scrollbar_color = Color3.fromRGB(118, 118, 121),
 }
 
-setmetatable(finity.gs, {
+setmetatable(Tinity.gs, {
 	__index = function(_, service)
 		return game:GetService(service)
 	end,
@@ -104,9 +101,9 @@ setmetatable(finity.gs, {
 })
 
 
-local mouse = finity.gs["Players"].LocalPlayer:GetMouse()
+local mouse = Tinity.gs["Players"].LocalPlayer:GetMouse()
 
-function finity:Create(class, properties)
+function Tinity:Create(class, properties)
 	local object = Instance.new(class)
 
 	for prop, val in next, properties do
@@ -118,7 +115,7 @@ function finity:Create(class, properties)
 	return object
 end
 
-function finity:addShadow(object, transparency)
+function Tinity:addShadow(object, transparency)
 	local shadow = self:Create("ImageLabel", {
 		Name = "Shadow",
 		AnchorPoint = Vector2.new(0.5, 0.5),
@@ -135,49 +132,49 @@ function finity:addShadow(object, transparency)
 	shadow.Parent = object
 end
 
-function finity.new(isdark, gprojectName, thinProject)
-	local finityObject = {}
-	local self2 = finityObject
-	local self = finity
+function Tinity.new(isdark, gprojectName, thinProject,customtheme)
+	local TinityObject = {}
+	local self2 = TinityObject
+	local self = Tinity
 
-	if not finity.gs["RunService"]:IsStudio() and self.gs["CoreGui"]:FindFirstChild("FinityUI") then
+	if not Tinity.gs["RunService"]:IsStudio() and self.gs["CoreGui"]:FindFirstChild("TinityUI") then
 
-		self.gs["CoreGui"]:FindFirstChild("FinityUI"):Destroy()
+		self.gs["CoreGui"]:FindFirstChild("TinityUI"):Destroy()
 	end
 
-	local theme = finity.theme
+	local theme = Tinity.theme
 	local projectName = false
 	local thinMenu = false
 	
-	if isdark == true then theme = finity.dark_theme end
+	if isdark == true then theme = Tinity.dark_theme end
 	if gprojectName then projectName = gprojectName end
 	if thinProject then thinMenu = thinProject end
-	
+	if customtheme then theme = customtheme end
 	local toggled = true
 	local typing = false
 	local firstCategory = true
     local savedposition = UDim2.new(0.5, 0, 0.5, 0)
     
 
-	local finityData
-	finityData = {
+	local TinityData
+	TinityData = {
 		UpConnection = nil,
 		ToggleKey = Enum.KeyCode.Home,
 	}
 
 	self2.ChangeToggleKey = function(NewKey)
-		finityData.ToggleKey = NewKey
+		TinityData.ToggleKey = NewKey
 		
 		if not projectName then
 			self2.tip.Text = "Press '".. string.sub(tostring(NewKey), 14) .."' to hide this menu"
 		end
 		
-		if finityData.UpConnection then
-			finityData.UpConnection:Disconnect()
+		if TinityData.UpConnection then
+			TinityData.UpConnection:Disconnect()
 		end
 
-		finityData.UpConnection = finity.gs["UserInputService"].InputEnded:Connect(function(Input)
-			if Input.KeyCode == finityData.ToggleKey and not typing then
+		TinityData.UpConnection = Tinity.gs["UserInputService"].InputEnded:Connect(function(Input)
+			if Input.KeyCode == TinityData.ToggleKey and not typing then
                 toggled = not toggled
 
                 pcall(function() self2.modal.Modal = toggled end)
@@ -202,8 +199,8 @@ function finity.new(isdark, gprojectName, thinProject)
 		end
 	end
 
-	finityData.UpConnection = finity.gs["UserInputService"].InputEnded:Connect(function(Input)
-		if Input.KeyCode == finityData.ToggleKey and not typing then
+	TinityData.UpConnection = Tinity.gs["UserInputService"].InputEnded:Connect(function(Input)
+		if Input.KeyCode == TinityData.ToggleKey and not typing then
 			toggled = not toggled
 
 			if toggled then
@@ -215,7 +212,7 @@ function finity.new(isdark, gprojectName, thinProject)
 	end)
 
 	self2.userinterface = self:Create("ScreenGui", {
-		Name = "FinityUI",
+		Name = "TinityUI",
 		ZIndexBehavior = Enum.ZIndexBehavior.Global,
 		ResetOnSpawn = false,
 	})
@@ -296,7 +293,7 @@ function finity.new(isdark, gprojectName, thinProject)
 		self2.tip.Text = "Press '".. string.sub(tostring(self.ToggleKey), 14) .."' to hide this menu"
 	end
     
-    function finity.settitle(text)
+    function self2.settitle(text)
         self2.tip.Text = tostring(text)
     end
 
@@ -349,7 +346,7 @@ function finity.new(isdark, gprojectName, thinProject)
 	function self2:Category(name)
 		local category = {}
 		
-		category.button = finity:Create("TextButton", {
+		category.button = Tinity:Create("TextButton", {
 			Name = name,
 			BackgroundColor3 = theme.category_button_background,
 			BackgroundTransparency = 1,
@@ -364,7 +361,7 @@ function finity.new(isdark, gprojectName, thinProject)
 			TextSize = 14
 		})
 
-		category.container = finity:Create("ScrollingFrame", {
+		category.container = Tinity:Create("ScrollingFrame", {
 			Name = name,
 			BackgroundTransparency = 1,
 			ScrollBarThickness = 4,
@@ -379,7 +376,7 @@ function finity.new(isdark, gprojectName, thinProject)
 			ScrollBarImageTransparency = 1 --
 		})
 
-		category.hider = finity:Create("Frame", {
+		category.hider = Tinity:Create("Frame", {
 			Name = "Hider",
 			BackgroundTransparency = 0, --
 			BorderSizePixel = 0,
@@ -388,7 +385,7 @@ function finity.new(isdark, gprojectName, thinProject)
 			ZIndex = 5
 		})
 
-		category.L = finity:Create("Frame", {
+		category.L = Tinity:Create("Frame", {
 			Name = "L",
 			BackgroundColor3 = Color3.new(1, 1, 1),
 			BackgroundTransparency = 1,
@@ -398,7 +395,7 @@ function finity.new(isdark, gprojectName, thinProject)
 		})
 		
 		if not thinProject then
-			category.R = finity:Create("Frame", {
+			category.R = Tinity:Create("Frame", {
 				Name = "R",
 				AnchorPoint = Vector2.new(1, 0),
 				BackgroundColor3 = Color3.new(1, 1, 1),
@@ -414,16 +411,16 @@ function finity.new(isdark, gprojectName, thinProject)
 		end
 		
 		if firstCategory then
-			finity.gs["TweenService"]:Create(category.hider, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
-			finity.gs["TweenService"]:Create(category.container, TweenInfo.new(0.3), {ScrollBarImageTransparency = 0}):Play()
+			Tinity.gs["TweenService"]:Create(category.hider, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+			Tinity.gs["TweenService"]:Create(category.container, TweenInfo.new(0.3), {ScrollBarImageTransparency = 0}):Play()
 		end
 		
 		do
-			local uilistlayout = finity:Create("UIListLayout", {
+			local uilistlayout = Tinity:Create("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder
 			})
 	
-			local uilistlayout2 = finity:Create("UIListLayout", {
+			local uilistlayout2 = Tinity:Create("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder
 			})
 			
@@ -447,29 +444,29 @@ function finity.new(isdark, gprojectName, thinProject)
 		end
 		
 		category.button.MouseEnter:Connect(function()
-			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 0.5}):Play()
+			Tinity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 0.5}):Play()
 		end)
 		category.button.MouseLeave:Connect(function()
-			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 1}):Play()
+			Tinity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 1}):Play()
 		end)
 		category.button.MouseButton1Down:Connect(function()
 			for _, categoryf in next, self2.userinterface["Container"]["Categories"]:GetChildren() do
 				if categoryf:IsA("ScrollingFrame") then
 					if categoryf ~= category.container then
-						finity.gs["TweenService"]:Create(categoryf.Hider, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
-						finity.gs["TweenService"]:Create(categoryf, TweenInfo.new(0.3), {ScrollBarImageTransparency = 1}):Play()
+						Tinity.gs["TweenService"]:Create(categoryf.Hider, TweenInfo.new(0.3), {BackgroundTransparency = 0}):Play()
+						Tinity.gs["TweenService"]:Create(categoryf, TweenInfo.new(0.3), {ScrollBarImageTransparency = 1}):Play()
 					end
 				end
 			end
 
-			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 0.2}):Play()
-			finity.gs["TweenService"]:Create(category.hider, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
-			finity.gs["TweenService"]:Create(category.container, TweenInfo.new(0.3), {ScrollBarImageTransparency = 0}):Play()
+			Tinity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 0.2}):Play()
+			Tinity.gs["TweenService"]:Create(category.hider, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+			Tinity.gs["TweenService"]:Create(category.container, TweenInfo.new(0.3), {ScrollBarImageTransparency = 0}):Play()
 
 			self2.categories["UIPageLayout"]:JumpTo(category.container)
 		end)
 		category.button.MouseButton1Up:Connect(function()
-			finity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 1}):Play()
+			Tinity.gs["TweenService"]:Create(category.button, TweenInfo.new(0.2), {BackgroundTransparency = 1}):Play()
 		end)
 
 		category.container.Parent = self2.categories
@@ -500,7 +497,7 @@ function finity.new(isdark, gprojectName, thinProject)
 		function category:Sector(name)
 			local sector = {}
 
-			sector.frame = finity:Create("Frame", {
+			sector.frame = Tinity:Create("Frame", {
 				Name = name,
 				BackgroundColor3 = Color3.new(1, 1, 1),
 				BackgroundTransparency = 1,
@@ -508,7 +505,7 @@ function finity.new(isdark, gprojectName, thinProject)
 				ZIndex = 2
 			})
 
-			sector.container = finity:Create("Frame", {
+			sector.container = Tinity:Create("Frame", {
 				Name = "Container",
 				BackgroundColor3 = Color3.new(1, 1, 1),
 				BackgroundTransparency = 1,
@@ -517,7 +514,7 @@ function finity.new(isdark, gprojectName, thinProject)
 				ZIndex = 2
 			})
 
-			sector.title = finity:Create("TextLabel", {
+			sector.title = Tinity:Create("TextLabel", {
 				Name = "Title",
 				Text = name,
 				BackgroundColor3 = Color3.new(1, 1, 1),
@@ -530,7 +527,7 @@ function finity.new(isdark, gprojectName, thinProject)
 				TextXAlignment = Enum.TextXAlignment.Left,
 			})
 
-			local uilistlayout = finity:Create("UIListLayout", {
+			local uilistlayout = Tinity:Create("UIListLayout", {
 				SortOrder = Enum.SortOrder.LayoutOrder
 			})
 
@@ -547,7 +544,7 @@ function finity.new(isdark, gprojectName, thinProject)
 				local cheat = {}
 				cheat.value = nil
 
-				cheat.frame = finity:Create("Frame", {
+				cheat.frame = Tinity:Create("Frame", {
 					Name = name,
 					BackgroundColor3 = Color3.new(1, 1, 1),
 					BackgroundTransparency = 1,
@@ -555,7 +552,7 @@ function finity.new(isdark, gprojectName, thinProject)
 					ZIndex = 2,
 				})
 
-				cheat.label = finity:Create("TextLabel", {
+				cheat.label = Tinity:Create("TextLabel", {
 					Name = "Title",
 					BackgroundColor3 = Color3.new(1, 1, 1),
 					BackgroundTransparency = 1,
@@ -568,7 +565,7 @@ function finity.new(isdark, gprojectName, thinProject)
 					TextXAlignment = Enum.TextXAlignment.Left
 				})
 
-				cheat.container	= finity:Create("Frame", {
+				cheat.container	= Tinity:Create("Frame", {
 					Name = "Container",
 					AnchorPoint = Vector2.new(1, 0.5),
 					BackgroundColor3 = Color3.new(1, 1, 1),
@@ -586,7 +583,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							end
 						end
 
-						cheat.checkbox = finity:Create("Frame", {
+						cheat.checkbox = Tinity:Create("Frame", {
 							Name = "Checkbox",
 							AnchorPoint = Vector2.new(1, 0),
 							BackgroundColor3 = Color3.new(1, 1, 1),
@@ -596,7 +593,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							ZIndex = 2,
 						})
 
-						cheat.outerbox = finity:Create("ImageLabel", {
+						cheat.outerbox = Tinity:Create("ImageLabel", {
 							Name = "Outer",
 							AnchorPoint = Vector2.new(1, 0.5),
 							BackgroundColor3 = Color3.new(1, 1, 1),
@@ -611,7 +608,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							SliceScale = 0.06,
 						})
 
-						cheat.checkboxbutton = finity:Create("ImageButton", {
+						cheat.checkboxbutton = Tinity:Create("ImageButton", {
 							AnchorPoint = Vector2.new(0.5, 0.5),
 							Name = "CheckboxButton",
 							BackgroundColor3 = Color3.new(1, 1, 1),
@@ -628,27 +625,27 @@ function finity.new(isdark, gprojectName, thinProject)
 
 						if data then
 							if data.enabled then
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
 							end
 						end
 
 						cheat.checkboxbutton.MouseEnter:Connect(function()
 							local lightertheme = Color3.fromRGB((theme.checkbox_outer.R * 255) + 20, (theme.checkbox_outer.G * 255) + 20, (theme.checkbox_outer.B * 255) + 20)
-							finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = lightertheme}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = lightertheme}):Play()
 						end)
 						cheat.checkboxbutton.MouseLeave:Connect(function()
 							if not cheat.value then
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
 							else
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
 							end
 						end)
 						cheat.checkboxbutton.MouseButton1Down:Connect(function()
 							if cheat.value then
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
 							else
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
 							end
 						end)
 						cheat.checkboxbutton.MouseButton1Up:Connect(function()
@@ -663,21 +660,22 @@ function finity.new(isdark, gprojectName, thinProject)
 							end
 
 							if cheat.value then
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
 							else
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
 							end
 						end)
 
 						function cheat:SetValue(value)
                             cheat.value = value
-							if cheat.value then
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
-							else
-								finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
-							end
+                            if cheat.value then
+                                Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
+                            else
+                                Tinity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
+                            end
                             if callback then
                                 local s, e = pcall(function()
                                     callback(cheat.value)
@@ -702,7 +700,7 @@ function finity.new(isdark, gprojectName, thinProject)
                         local hsvimage = "rbxassetid://4613607014"
                         local lumienceimage = "rbxassetid://4613627894"
                         
-                        cheat.hsvbar = finity:Create("ImageButton", {
+                        cheat.hsvbar = Tinity:Create("ImageButton", {
 							AnchorPoint = Vector2.new(0.5, 0.5),
 							Name = "HSVBar",
 							BackgroundColor3 = Color3.new(1, 1, 1),
@@ -713,7 +711,7 @@ function finity.new(isdark, gprojectName, thinProject)
                             Image = hsvimage
                         })
 
-                        cheat.arrowpreview = finity:Create("ImageLabel", {
+                        cheat.arrowpreview = Tinity:Create("ImageLabel", {
                             Name = "ArrowPreview",
                             BackgroundColor3 = Color3.new(1, 1, 1),
                             BackgroundTransparency = 1,
@@ -726,8 +724,8 @@ function finity.new(isdark, gprojectName, thinProject)
                         })
                         
                         cheat.hsvbar.MouseButton1Down:Connect(function()
-                            local rs = finity.gs["RunService"]
-                            local uis = finity.gs["UserInputService"]local last = cheat.value;
+                            local rs = Tinity.gs["RunService"]
+                            local uis = Tinity.gs["UserInputService"]local last = cheat.value;
 
                             cheat.hsvbar.Image = hsvimage
 
@@ -738,7 +736,7 @@ function finity.new(isdark, gprojectName, thinProject)
                                 local scale = offset / cheat.hsvbar.AbsoluteSize.X
                                 local position = math.clamp(offset, -sx, cheat.hsvbar.AbsoluteSize.X - sx) / cheat.hsvbar.AbsoluteSize.X
 
-                                finity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
+                                Tinity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
                                 
                                 cheat.value = Color3.fromHSV(math.clamp(scale, 0, 1), 1, 1)
 
@@ -758,8 +756,8 @@ function finity.new(isdark, gprojectName, thinProject)
                             end
                         end)
                         cheat.hsvbar.MouseButton2Down:Connect(function()
-                            local rs = finity.gs["RunService"]
-                            local uis = finity.gs["UserInputService"]
+                            local rs = Tinity.gs["RunService"]
+                            local uis = Tinity.gs["UserInputService"]
                             local last = cheat.value;
 
                             cheat.hsvbar.Image = lumienceimage
@@ -771,7 +769,7 @@ function finity.new(isdark, gprojectName, thinProject)
                                 local scale = offset / cheat.hsvbar.AbsoluteSize.X
                                 local position = math.clamp(offset, -sx, cheat.hsvbar.AbsoluteSize.X - sx) / cheat.hsvbar.AbsoluteSize.X
 
-                                finity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
+                                Tinity.gs["TweenService"]:Create(cheat.arrowpreview, TweenInfo.new(0.1), {Position = UDim2.new(position, 0, 0.5, -6)}):Play()
                                 
                                 cheat.value = Color3.fromHSV(1, 0, 1 - math.clamp(scale, 0, 1))
 
@@ -791,24 +789,6 @@ function finity.new(isdark, gprojectName, thinProject)
                             end
                         end)
 
-                        function cheat:SetValue(value)
-                            cheat.value = value
-                            if cheat.value then
-                                finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_checked}):Play()
-                            else
-                                finity.gs["TweenService"]:Create(cheat.outerbox, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_outer}):Play()
-								finity.gs["TweenService"]:Create(cheat.checkboxbutton, TweenInfo.new(0.2), {ImageColor3 = theme.checkbox_inner}):Play()
-                            end
-                            if callback then
-                                local s, e = pcall(function()
-                                    callback(cheat.value)
-                                end)
-                                if not s then 
-                                    warn("error: "..e) 
-                                end
-                            end
-                        end
 
 						cheat.hsvbar.Parent = cheat.container
 						cheat.arrowpreview.Parent = cheat.hsvbar
@@ -831,7 +811,7 @@ function finity.new(isdark, gprojectName, thinProject)
 
 						cheat.dropped = false
 
-						cheat.dropdown = finity:Create("ImageButton", {
+						cheat.dropdown = Tinity:Create("ImageButton", {
 							Name = "Dropdown",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -845,7 +825,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							SliceScale = 0.02
 						})
 
-						cheat.selected = finity:Create("TextLabel", {
+						cheat.selected = Tinity:Create("TextLabel", {
 							Name = "Selected",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -859,7 +839,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							TextXAlignment = Enum.TextXAlignment.Left
 						})
 
-						cheat.list = finity:Create("ScrollingFrame", {
+						cheat.list = Tinity:Create("ScrollingFrame", {
 							Name = "List",
 							BackgroundColor3 = theme.dropdown_background,
 							BackgroundTransparency = 0.5,
@@ -875,13 +855,13 @@ function finity.new(isdark, gprojectName, thinProject)
 							ScrollBarImageColor3 = theme.dropdown_scrollbar_color
 						})
 
-						local uilistlayout = finity:Create("UIListLayout", {
+						local uilistlayout = Tinity:Create("UIListLayout", {
 							SortOrder = Enum.SortOrder.LayoutOrder,
 							Padding = UDim.new(0, 2)
 						})
 						uilistlayout.Parent = cheat.list
 						uilistlayout = nil
-						local uipadding = finity:Create("UIPadding", {
+						local uipadding = Tinity:Create("UIPadding", {
 							PaddingLeft = UDim.new(0, 2)
 						})
 						uipadding.Parent = cheat.list
@@ -899,7 +879,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							end
 							
 							for _, value in next, options do
-								local button = finity:Create("TextButton", {
+								local button = Tinity:Create("TextButton", {
 									BackgroundColor3 = Color3.new(1, 1, 1),
 									BackgroundTransparency = 1,
 									Size = UDim2.new(1, 0, 0, 20),
@@ -913,10 +893,10 @@ function finity.new(isdark, gprojectName, thinProject)
 								button.Parent = cheat.list
 	
 								button.MouseEnter:Connect(function()
-									finity.gs["TweenService"]:Create(button, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text_hover}):Play()
+									Tinity.gs["TweenService"]:Create(button, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text_hover}):Play()
 								end)
 								button.MouseLeave:Connect(function()
-									finity.gs["TweenService"]:Create(button, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text}):Play()
+									Tinity.gs["TweenService"]:Create(button, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text}):Play()
 								end)
 								button.MouseButton1Click:Connect(function()
 									if cheat.dropped then
@@ -936,10 +916,10 @@ function finity.new(isdark, gprojectName, thinProject)
 								end)
 								
 								
-								finity.gs["TweenService"]:Create(button, TweenInfo.new(0), {TextTransparency = 1}):Play()
+								Tinity.gs["TweenService"]:Create(button, TweenInfo.new(0), {TextTransparency = 1}):Play()
 							end
 							
-							finity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0), {Size = UDim2.new(1, 0, 0, 0), Position = UDim2.new(0, 0, 1, 0), CanvasSize = UDim2.new(0, 0, 0, cheat.list["UIListLayout"].AbsoluteContentSize.Y), ScrollBarImageTransparency = 1, BackgroundTransparency = 1}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0), {Size = UDim2.new(1, 0, 0, 0), Position = UDim2.new(0, 0, 1, 0), CanvasSize = UDim2.new(0, 0, 0, cheat.list["UIListLayout"].AbsoluteContentSize.Y), ScrollBarImageTransparency = 1, BackgroundTransparency = 1}):Play()
 						end
 						
 						
@@ -949,27 +929,27 @@ function finity.new(isdark, gprojectName, thinProject)
 							if cheat.dropped then
 								for _, button in next, cheat.list:GetChildren() do
 									if button:IsA("TextButton") then
-										finity.gs["TweenService"]:Create(button, TweenInfo.new(0.2), {TextTransparency = 0}):Play()
+										Tinity.gs["TweenService"]:Create(button, TweenInfo.new(0.2), {TextTransparency = 0}):Play()
 									end
 								end
 
-								finity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0, math.clamp(cheat.list["UIListLayout"].AbsoluteContentSize.Y, 0, 150)), Position = UDim2.new(0, 0, 1, 0), ScrollBarImageTransparency = 0, BackgroundTransparency = 0.5}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0, math.clamp(cheat.list["UIListLayout"].AbsoluteContentSize.Y, 0, 150)), Position = UDim2.new(0, 0, 1, 0), ScrollBarImageTransparency = 0, BackgroundTransparency = 0.5}):Play()
 							else
 								for _, button in next, cheat.list:GetChildren() do
 									if button:IsA("TextButton") then
-										finity.gs["TweenService"]:Create(button, TweenInfo.new(0.2), {TextTransparency = 1}):Play()
+										Tinity.gs["TweenService"]:Create(button, TweenInfo.new(0.2), {TextTransparency = 1}):Play()
 									end
 								end
 
-								finity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0, 0), Position = UDim2.new(0, 0, 1, 0), ScrollBarImageTransparency = 1, BackgroundTransparency = 1}):Play()
+								Tinity.gs["TweenService"]:Create(cheat.list, TweenInfo.new(0.2), {Size = UDim2.new(1, 0, 0, 0), Position = UDim2.new(0, 0, 1, 0), ScrollBarImageTransparency = 1, BackgroundTransparency = 1}):Play()
 							end
 						end
 
 						cheat.dropdown.MouseEnter:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.selected, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text_hover}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.selected, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text_hover}):Play()
 						end)
 						cheat.dropdown.MouseLeave:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.selected, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.selected, TweenInfo.new(0.1), {TextColor3 = theme.dropdown_text}):Play()
 						end)
 						cheat.dropdown.MouseButton1Click:Connect(function()
 							cheat.fadelist()
@@ -1023,7 +1003,7 @@ function finity.new(isdark, gprojectName, thinProject)
 					elseif string.lower(kind) == "textbox" then
 						local placeholdertext = data and data.placeholder
 
-						cheat.background = finity:Create("ImageLabel", {
+						cheat.background = Tinity:Create("ImageLabel", {
 							Name = "Background",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1037,7 +1017,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							SliceScale = 0.02
 						})
 
-						cheat.textbox = finity:Create("TextBox", {
+						cheat.textbox = Tinity:Create("TextBox", {
 							Name = "Textbox",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1054,21 +1034,21 @@ function finity.new(isdark, gprojectName, thinProject)
 						})
 
 						cheat.background.MouseEnter:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text_hover}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text_hover}):Play()
 						end)
 						cheat.background.MouseLeave:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text}):Play()
 						end)
 						cheat.textbox.Focused:Connect(function()
 							typing = true
 
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.textbox_background_hover}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.textbox_background_hover}):Play()
 						end)
 						cheat.textbox.FocusLost:Connect(function()
 							typing = false
 
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.textbox_background}):Play()
-							finity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.textbox_background}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.textbox, TweenInfo.new(0.1), {TextColor3 = theme.textbox_text}):Play()
 
 							cheat.value = cheat.textbox.Text
 
@@ -1099,7 +1079,7 @@ function finity.new(isdark, gprojectName, thinProject)
 						local moveconnection
 						local releaseconnection
 
-						cheat.sliderbar = finity:Create("ImageButton", {
+						cheat.sliderbar = Tinity:Create("ImageButton", {
 							Name = "Sliderbar",
 							AnchorPoint = Vector2.new(1, 0.5),
 							BackgroundColor3 = Color3.new(1, 1, 1),
@@ -1115,7 +1095,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							SliceScale = 0.02,
 						})
 
-						cheat.numbervalue = finity:Create("TextLabel", {
+						cheat.numbervalue = Tinity:Create("TextLabel", {
 							Name = "Value",
 							AnchorPoint = Vector2.new(0, 0.5),
 							BackgroundColor3 = Color3.new(1, 1, 1),
@@ -1131,7 +1111,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							TextSize = 13,
 						})
 
-						cheat.visiframe = finity:Create("ImageLabel", {
+						cheat.visiframe = Tinity:Create("ImageLabel", {
 							Name = "Frame",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1149,7 +1129,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							local percent = size / 150
 							local perc = default/maximum
                             cheat.value = math.floor((minimum + (maximum - minimum) * percent) * 100) / 100
-                            finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+                            Tinity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
 								Size = UDim2.new(perc, 0, 1, 0),
                             }):Play()
                             if callback then
@@ -1166,7 +1146,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							local percent = size / 150
 							local perc = default/maximum
                             cheat.value = math.floor((minimum + (maximum - minimum) * percent) * 100) / 100
-                            finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+                            Tinity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
 								Size = UDim2.new(perc, 0, 1, 0),
                             }):Play()
                             if callback then
@@ -1201,12 +1181,12 @@ function finity.new(isdark, gprojectName, thinProject)
 								if not s then warn("error: ".. e) end
 							end
 
-							finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+							Tinity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
 								Size = UDim2.new(size / 150, 0, 1, 0),
 								ImageColor3 = theme.slider_color_sliding
 							}):Play()
 
-							finity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
+							Tinity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
 								Position = UDim2.new(size / 150, 5, 0.5, 0),
 								TextTransparency = 0
 							}):Play()
@@ -1234,7 +1214,7 @@ function finity.new(isdark, gprojectName, thinProject)
 									if not s then warn("error: ".. e) end
 								end
 
-								finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+								Tinity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
 									Size = UDim2.new(size / 150, 0, 1, 0),
 								ImageColor3 = theme.slider_color_sliding
                                 }):Play()
@@ -1245,20 +1225,20 @@ function finity.new(isdark, gprojectName, thinProject)
                                     Position = UDim2.new(1, -cheat.numbervalue.TextBounds.X, 0.5, 10);
                                 end
 
-								finity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
+								Tinity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
 									Position = Position,
 									TextTransparency = 0
 								}):Play()
 							end)
 
-							releaseconnection = finity.gs["UserInputService"].InputEnded:Connect(function(Mouse)
+							releaseconnection = Tinity.gs["UserInputService"].InputEnded:Connect(function(Mouse)
 								if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
 
-									finity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
+									Tinity.gs["TweenService"]:Create(cheat.visiframe, TweenInfo.new(0.1), {
 										ImageColor3 = theme.slider_color
 									}):Play()
 
-									finity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
+									Tinity.gs["TweenService"]:Create(cheat.numbervalue, TweenInfo.new(0.1), {
 										TextTransparency = 1
 									}):Play()
 
@@ -1276,7 +1256,7 @@ function finity.new(isdark, gprojectName, thinProject)
 					elseif string.lower(kind) == "button" then
 						local button_text = data and data.text
 
-						cheat.background = finity:Create("ImageLabel", {
+						cheat.background = Tinity:Create("ImageLabel", {
 							Name = "Background",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1290,7 +1270,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							SliceScale = 0.02
 						})
 
-						cheat.button = finity:Create("TextButton", {
+						cheat.button = Tinity:Create("TextButton", {
 							Name = "Button",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1305,16 +1285,16 @@ function finity.new(isdark, gprojectName, thinProject)
 						})
 
 						cheat.button.MouseEnter:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_hover}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_hover}):Play()
 						end)
 						cheat.button.MouseLeave:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
 						end)
 						cheat.button.MouseButton1Down:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
 						end)
 						cheat.button.MouseButton1Up:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
 							
 							if callback then
 								local s, e = pcall(function()
@@ -1357,7 +1337,7 @@ function finity.new(isdark, gprojectName, thinProject)
 						local connection
 						cheat.holding = false
 						
-						cheat.background = finity:Create("ImageLabel", {
+						cheat.background = Tinity:Create("ImageLabel", {
 							Name = "Background",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1371,7 +1351,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							SliceScale = 0.02
 						})
 
-						cheat.button = finity:Create("TextButton", {
+						cheat.button = Tinity:Create("TextButton", {
 							Name = "Button",
 							BackgroundColor3 = Color3.new(1, 1, 1),
 							BackgroundTransparency = 1,
@@ -1386,19 +1366,19 @@ function finity.new(isdark, gprojectName, thinProject)
 						})
 
 						cheat.button.MouseEnter:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_hover}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_hover}):Play()
 						end)
 						cheat.button.MouseLeave:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
 						end)
 						cheat.button.MouseButton1Down:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
                         end)
                         cheat.button.MouseButton2Down:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background_down}):Play()
 						end)
 						cheat.button.MouseButton1Up:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
 							cheat.button.Text = "Press key..."
 							
 							if connection then
@@ -1407,9 +1387,9 @@ function finity.new(isdark, gprojectName, thinProject)
 							end
 							cheat.holding = false
 
-							connection = finity.gs["UserInputService"].InputBegan:Connect(function(Input)
+							connection = Tinity.gs["UserInputService"].InputBegan:Connect(function(Input)
 								local keyc = Input.KeyCode == Enum.KeyCode.Unknown and Input.UserInputType or Input.KeyCode
-								if keyc.Name ~= "MouseMovement" and keyc ~= finityData.ToggleKey and keyc ~= Enum.KeyCode.Backspace then
+								if keyc.Name ~= "MouseMovement" and keyc ~= TinityData.ToggleKey and keyc ~= Enum.KeyCode.Backspace then
 									local buttontext = "Bound to " .. tostring(keyc.Name)
 									
                                     if connection then
@@ -1450,7 +1430,7 @@ function finity.new(isdark, gprojectName, thinProject)
 									]]
 									connection:Disconnect()
 									connection = nil
-								elseif keyc == finityData.ToggleKey then
+								elseif keyc == TinityData.ToggleKey then
 									cheat.button.Text = "Invalid Key";
 									cheat.value = nil
 								end
@@ -1458,7 +1438,7 @@ function finity.new(isdark, gprojectName, thinProject)
 						end)
 						
                         cheat.button.MouseButton2Up:Connect(function()
-							finity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
+							Tinity.gs["TweenService"]:Create(cheat.background, TweenInfo.new(0.2), {ImageColor3 = theme.button_background}):Play()
 							cheat.value = nil
 							callback_bind = nil
 							cheat.button.Text = "Click to Bind"
@@ -1485,7 +1465,7 @@ function finity.new(isdark, gprojectName, thinProject)
                             cheat.button.Text = "Bound to " .. tostring(value)
                         end
 						--[[
-						finity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
+						Tinity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
 							if callback_bind and Input.KeyCode == callback_bind and not Process then
 
 								cheat.holding = true
@@ -1499,7 +1479,7 @@ function finity.new(isdark, gprojectName, thinProject)
 							end
 						end)
 						]]
-						finity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
+						Tinity.gs["UserInputService"].InputBegan:Connect(function(Input, Process)
 							if callback_bind and Input.KeyCode == callback_bind and not Process then
 								cheat.holding = true
 							end
@@ -1537,7 +1517,7 @@ function finity.new(isdark, gprojectName, thinProject)
 
 	self2.categories.ClipsDescendants = true
 	
-	if not finity.gs["RunService"]:IsStudio() then
+	if not Tinity.gs["RunService"]:IsStudio() then
 		self2.userinterface.Parent = self.gs["CoreGui"]
 	else
 		self2.userinterface.Parent = self.gs["Players"].LocalPlayer:WaitForChild("PlayerGui")
@@ -1549,7 +1529,7 @@ function finity.new(isdark, gprojectName, thinProject)
 	self2.topbar.Parent = self2.container
 	self2.tip.Parent = self2.topbar
 
-	return self2, finityData
+	return self2, TinityData
 end
 
-return finity
+return Tinity
